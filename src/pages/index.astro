@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import Fog from '../components/Fog.astro';
+import Sigil from '../components/Sigil.astro';
+import { BRAND, SITE } from '../site';
+
+const title = `${BRAND.name} — ${SITE.tagline.replace(/\.$/, '')}`;
+---
+
+<Base title={title} description={SITE.tagline}>
+  <div class="page">
+    <Fog />
+
+    <main>
+      <div class="hero">
+        <Sigil label={`${BRAND.name} sigil`} accent={BRAND.accent} />
+        <div class="title-group">
+          <h1 class:list={[{ caps: BRAND.caps }]}>{BRAND.display}</h1>
+          <p class="tagline">{SITE.tagline}</p>
+        </div>
+        <a class="cta" href={SITE.accessHref}>Request access</a>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-inner">{BRAND.domain}</div>
+    </footer>
+  </div>
+</Base>

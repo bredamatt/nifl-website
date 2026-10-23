@@ -1,0 +1,61 @@
+---
+/**
+ * Fog and rune-lightning background.
+ * Drawn with WebGL. Falls back to CSS/SVG mist when WebGL is not available.
+ */
+import '../styles/fog.css';
+
+interface Props {
+  /** Fog strength, 0 to 1. */
+  mist?: number;
+  /** Wind speed multiplier, 0.25 to 4. */
+  speed?: number;
+  /** Rune strike strength, 0 to 1. */
+  runes?: number;
+  /** Canvas resolution relative to CSS pixels. Lower is faster. */
+  renderScale?: number;
+}
+
+const { mist = 0.8, speed = 1, runes = 0.7, renderScale = 0.6 } = Astro.props;
+---
+
+<div
+  class="fx"
+  aria-hidden="true"
+  data-fog
+  data-mist={mist}
+  data-speed={speed}
+  data-runes={runes}
+  data-render-scale={renderScale}
+>
+  <div class="fallback" data-fog-fallback>
+    <svg class="svg-defs" width="0" height="0" focusable="false">
+      <defs>
+        <filter id="mistA" x="0" y="0" width="1000" height="400" filterUnits="userSpaceOnUse">
+          <feTurbulence type="fractalNoise" baseFrequency="0.0024 0.011" numOctaves="4" seed="3" stitchTiles="stitch" />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.93 0 0 0 0 0.95 0 0 0 0 0.97 1.8 0 0 0 -0.7" />
+        </filter>
+        <filter id="mistB" x="0" y="0" width="1000" height="400" filterUnits="userSpaceOnUse">
+          <feTurbulence type="fractalNoise" baseFrequency="0.004 0.016" numOctaves="3" seed="17" stitchTiles="stitch" />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.93 0 0 0 0 0.95 0 0 0 0 0.97 1.9 0 0 0 -0.78" />
+        </filter>
+      </defs>
+    </svg>
+    <div class="mist-layer mist-back">
+      <svg viewBox="0 0 1000 400" preserveAspectRatio="none"><rect width="1000" height="400" filter="url(#mistA)" /></svg>
+      <svg viewBox="0 0 1000 400" preserveAspectRatio="none"><rect width="1000" height="400" filter="url(#mistA)" /></svg>
+    </div>
+    <div class="mist-layer rune-track"></div>
+    <div class="mist-layer mist-front">
+      <svg viewBox="0 0 1000 400" preserveAspectRatio="none"><rect width="1000" height="400" filter="url(#mistB)" /></svg>
+      <svg viewBox="0 0 1000 400" preserveAspectRatio="none"><rect width="1000" height="400" filter="url(#mistB)" /></svg>
+    </div>
+  </div>
+  <canvas data-fog-canvas></canvas>
+</div>
+
+<script>
+  import { initFog } from '../scripts/fog';
+
+  document.querySelectorAll<HTMLElement>('[data-fog]').forEach((el) => initFog(el));
+</script>

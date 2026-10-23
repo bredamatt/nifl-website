@@ -1,0 +1,22 @@
+---
+interface Props {
+  label: string;
+  accent?: string;
+  width?: number;
+}
+
+const { label, accent = '#8FD8FF', width = 40 } = Astro.props;
+const height = Math.round(width * 1.5);
+---
+
+<svg width={width} height={height} viewBox="0 0 48 72" role="img" aria-label={label}>
+  <path
+    d="M24 18L37 36L24 54L11 36ZM24 4V68"
+    fill="none"
+    stroke="#EDEDED"
+    stroke-width="2.4"
+    stroke-linecap="square"
+    stroke-linejoin="miter"
+  />
+  <rect x="22.5" y="34.5" width="3" height="3" fill={accent} />
+</svg>

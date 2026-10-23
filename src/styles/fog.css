@@ -1,0 +1,173 @@
+/* Fog container */
+.fx {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.fx canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Fallback, used only when WebGL is not available */
+.fallback {
+  position: absolute;
+  inset: 0;
+}
+
+.svg-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.mist-layer {
+  position: absolute;
+  left: 0;
+  width: 200%;
+  display: flex;
+  will-change: transform;
+  animation-name: mistDrift;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.mist-layer svg {
+  display: block;
+  width: 50%;
+  height: 100%;
+}
+
+.mist-back {
+  top: 14%;
+  height: 72%;
+  opacity: 0.4;
+  animation-duration: 60s;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 30%, #000 65%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 30%, #000 65%, transparent);
+}
+
+.mist-front {
+  top: 38%;
+  height: 62%;
+  opacity: 0.28;
+  animation-duration: 32s;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 35%, #000 60%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 35%, #000 60%, transparent);
+}
+
+.rune-track {
+  top: 0;
+  height: 100%;
+  opacity: 0.52;
+  animation-duration: 36s;
+}
+
+.rune {
+  position: absolute;
+}
+
+.rune-glow {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(205, 228, 255, 0.3), rgba(205, 228, 255, 0.08) 55%, rgba(205, 228, 255, 0) 100%);
+}
+
+.rune-strike {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.rune-strike,
+.rune-glow {
+  opacity: 0;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.strike-a { animation-name: strikeA; }
+.strike-b { animation-name: strikeB; }
+.glow-a { animation-name: glowA; }
+.glow-b { animation-name: glowB; }
+
+@keyframes mistDrift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes strikeA {
+  0% { opacity: 0; transform: translate(0, 0); filter: blur(1px) drop-shadow(0 0 0 rgba(225, 240, 255, 0)); }
+  40% { opacity: 0; transform: translate(0, 0); filter: blur(1px) drop-shadow(0 0 0 rgba(225, 240, 255, 0)); }
+  40.3% { opacity: 1; transform: translate(-1px, 0); filter: blur(0px) drop-shadow(0 0 10px rgba(225, 240, 255, 1)); }
+  41% { opacity: 0.1; transform: translate(1px, 1px); }
+  41.6% { opacity: 0.95; transform: translate(0, -1px); }
+  42.2% { opacity: 0.2; transform: translate(1px, 0); }
+  42.6% { opacity: 1; transform: translate(0, 0); filter: blur(0px) drop-shadow(0 0 12px rgba(225, 240, 255, 1)); }
+  44% { opacity: 0.6; filter: blur(0.5px) drop-shadow(0 0 6px rgba(225, 240, 255, 0.6)); }
+  48% { opacity: 0.15; filter: blur(2px) drop-shadow(0 0 2px rgba(225, 240, 255, 0.2)); }
+  52% { opacity: 0; filter: blur(3px) drop-shadow(0 0 0 rgba(225, 240, 255, 0)); }
+  100% { opacity: 0; transform: translate(0, 0); filter: blur(3px) drop-shadow(0 0 0 rgba(225, 240, 255, 0)); }
+}
+
+@keyframes strikeB {
+  0% { opacity: 0; transform: translate(0, 0); filter: blur(1px) drop-shadow(0 0 0 rgba(225, 240, 255, 0)); }
+  30% { opacity: 0; transform: translate(0, 0); filter: blur(1px) drop-shadow(0 0 0 rgba(225, 240, 255, 0)); }
+  30.3% { opacity: 0.9; transform: translate(1px, 0); filter: blur(0px) drop-shadow(0 0 8px rgba(225, 240, 255, 0.9)); }
+  30.9% { opacity: 0.1; transform: translate(-1px, 1px); }
+  31.4% { opacity: 0.8; transform: translate(0, 0); }
+  32.5% { opacity: 0.25; filter: blur(1px) drop-shadow(0 0 3px rgba(225, 240, 255, 0.3)); }
+  33.5% { opacity: 0; filter: blur(1px) drop-shadow(0 0 0 rgba(225, 240, 255, 0)); }
+  42% { opacity: 0; transform: translate(0, 0); }
+  42.3% { opacity: 1; transform: translate(-1px, -1px); filter: blur(0px) drop-shadow(0 0 12px rgba(225, 240, 255, 1)); }
+  42.9% { opacity: 0.2; transform: translate(1px, 0); }
+  43.5% { opacity: 1; transform: translate(0, 0); }
+  45% { opacity: 0.5; filter: blur(0.5px) drop-shadow(0 0 5px rgba(225, 240, 255, 0.5)); }
+  50% { opacity: 0.1; filter: blur(2px) drop-shadow(0 0 1px rgba(225, 240, 255, 0.1)); }
+  54% { opacity: 0; filter: blur(3px) drop-shadow(0 0 0 rgba(225, 240, 255, 0)); }
+  100% { opacity: 0; transform: translate(0, 0); filter: blur(3px) drop-shadow(0 0 0 rgba(225, 240, 255, 0)); }
+}
+
+@keyframes glowA {
+  0% { opacity: 0; }
+  40% { opacity: 0; }
+  40.3% { opacity: 1; }
+  41% { opacity: 0.15; }
+  41.6% { opacity: 0.85; }
+  42.2% { opacity: 0.25; }
+  42.6% { opacity: 0.9; }
+  45% { opacity: 0.3; }
+  50% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes glowB {
+  0% { opacity: 0; }
+  30% { opacity: 0; }
+  30.3% { opacity: 0.8; }
+  30.9% { opacity: 0.1; }
+  31.4% { opacity: 0.7; }
+  33% { opacity: 0; }
+  42% { opacity: 0; }
+  42.3% { opacity: 1; }
+  42.9% { opacity: 0.2; }
+  43.5% { opacity: 0.9; }
+  46% { opacity: 0.3; }
+  52% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mist-layer { animation: none; }
+  .rune-strike { animation: none; opacity: 0.35; }
+  .rune-glow { animation: none; opacity: 0; }
+}
